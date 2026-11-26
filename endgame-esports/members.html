@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free members list | EñDgame eSports</title>
+  <meta name="description" content="Join the free EñDgame eSports members list by email and download the Family VoD Review for Fortnite.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .member-steps {max-width:42rem}
+    .member-step {margin:1.75rem 0}
+    .signup-confirmation {display:flex;gap:.75rem;align-items:flex-start;padding:1rem 0}
+    .signup-confirmation input {width:1.25rem;height:1.25rem;margin-top:.25rem;flex-shrink:0}
+    [hidden] {display:none!important}
+    #pdf-status {margin-top:1rem}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="index.html" aria-label="EñDgame eSports home">EÑDGAME<span>eSports</span></a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="coaches.html">Coaches</a>
+        <a class="nav-contact" href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-intro wrap member-steps">
+      <p class="eyebrow">Free EñDgame membership</p>
+      <h1>Keep the conversation going</h1>
+      <p class="hero-lead">Join our members list for family gaming resources and EñDgame updates. Membership and the Family VoD Review PDF are free.</p>
+      <div class="member-step">
+        <h2>Join by email</h2>
+        <p>Open the prepared signup email, add your name, and send it to <a href="mailto:bret.endgame@gmail.com">bret.endgame@gmail.com</a>. Your email address and signup message will be kept in EñDgame’s Gmail inbox so we can manage your membership and send updates. You can leave the list by replying to an email.</p>
+        <a class="button button-primary" href="mailto:bret.endgame@gmail.com?subject=Join%20E%C3%B1Dgame%20free%20members%20list&body=Please%20add%20me%20to%20the%20free%20E%C3%B1Dgame%20eSports%20members%20list%20for%20family%20gaming%20resources%20and%20E%C3%B1Dgame%20updates.%20I%20understand%20I%20can%20leave%20the%20list%20by%20replying%20to%20an%20email.%0A%0AMy%20name%3A%20">Open my signup email</a>
+        <p>If the button doesn’t open your email app, send an email to the address above with the subject “Join EñDgame free members list” and ask to receive family gaming resources and EñDgame updates.</p>
+      </div>
+      <div class="member-step">
+        <h2>Download your toolkit</h2>
+        <p>After sending your signup email, confirm below to show the download.</p>
+        <label class="signup-confirmation"><input type="checkbox" id="signup-sent"><span>I have sent my signup email.</span></label>
+        <div id="pdf-download" hidden>
+          <a class="button button-primary" href="downloads/family-vod-review-fortnite.pdf" download>Download the free Fortnite PDF</a>
+        </div>
+        <p id="pdf-status" role="status" aria-live="polite"></p>
+      </div>
+      <a class="text-link" href="family-vod-review/">Use the Family VoD Review in your browser</a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div><p class="footer-name">EñDgame eSports</p><p>Durham Region, Ontario</p></div>
+      <a href="contact.html">Contact EñDgame</a>
+    </div>
+  </footer>
+<script>
+const confirmation = document.getElementById('signup-sent');
+const download = document.getElementById('pdf-download');
+const status = document.getElementById('pdf-status');
+function updateDownload() {
+  download.hidden = !confirmation.checked;
+  status.textContent = confirmation.checked ? 'Your PDF is ready to download.' : '';
+}
+confirmation.addEventListener('change', updateDownload);
+updateDownload();
+</script>
+</body>
+</html>

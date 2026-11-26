@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Family VoD Review | EñDgame Esports</title>
+<style>
+
+* { box-sizing: border-box; }
+:root { color-scheme: dark; font-family: system-ui, sans-serif; color: #f7f4ea; background: #101725; }
+body { margin: 0; font-size: 1rem; line-height: 1.6; background: radial-gradient(ellipse at top right,#24565d66,transparent 60%),#101725; min-height: 100vh; min-height: 100dvh; }
+header, main, footer { width: 100%; max-width: 32rem; margin-inline: auto; padding: .875rem 1rem; }
+header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; padding-top: max(.875rem,env(safe-area-inset-top)); }
+header strong { color: #8be5dc; }
+button, select { font: inherit; color: inherit; background: #213449; border: 1px solid #8ba0b6; border-radius: .65rem; min-height: 2.75rem; padding: .625rem .875rem; cursor: pointer; touch-action: manipulation; }
+button.primary { background: #8be5dc; color: #102132; border-color: #8be5dc; font-weight: 700; }
+button:disabled { opacity: .45; cursor: default; }
+[hidden] { display: none !important; }
+a { color: #b3ddff; overflow-wrap: anywhere; }
+a:hover { text-decoration-thickness: 3px; }
+:focus-visible { outline: 3px solid #ffcd7b; outline-offset: 3px; }
+nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .4rem; margin-bottom: .875rem; }
+nav button { padding: .5rem .25rem; font-size: .875rem; line-height: 1.25; }
+nav button[aria-current="step"] { color: #102132; background: #8be5dc; border-color: #8be5dc; }
+.slide { position: relative; overflow: hidden; border: 1px solid #69958c66; border-radius: 1.1rem; background: #14253b; box-shadow: 0 12px 36px #07101e55; }
+.slide > .chapter { position: absolute; top: 1rem; left: 1rem; z-index: 2; color: #fff; font-size: .875rem; text-shadow: 0 2px 5px #000; }
+#pages { position: relative; z-index: 1; min-width: 0; }
+#pages > div > h1 { display: flex; align-items: flex-end; min-height: 12rem; margin: 0; padding: 7.75rem 1rem 1.25rem; color: #fff; font-size: clamp(1.9rem,7vw,2.5rem); line-height: 1.1; text-shadow: 0 3px 18px #000; overflow-wrap: break-word; }
+h2 { font-size: 1.2rem; line-height: 1.3; color: #8be5dc; margin: 1.5rem 0 .75rem; }
+p { margin: 0 0 1rem; }
+ul { padding-left: 1.35rem; }
+li + li { margin-top: .5rem; }
+.content-panel { margin: 0 .625rem .625rem; padding: 1.125rem; border: 1px solid #91c6cb44; border-radius: .8rem; background: #101f34c7; overflow-wrap: break-word; }
+.content-panel > :first-child { margin-top: 0; }
+.content-panel > :last-child { margin-bottom: 0; }
+.legacy { padding: .75rem; border-left: 3px solid #ffcd7b; background: #213449b3; font-size: .9375rem; margin-bottom: 1rem; }
+.path { display: grid; grid-template-columns: minmax(0,1fr); gap: .875rem; }
+.path article { background: #1c344a99; border-top: 3px solid #8be5dc; padding: 1rem; border-radius: .65rem; }
+.path h2 { margin-top: 0; }
+.path p { margin-bottom: 0; }
+.game-banner { display: none; position: absolute; z-index: 3; top: .875rem; right: .875rem; width: 7rem; height: auto; object-fit: contain; filter: drop-shadow(0 4px 8px #0004); pointer-events: none; }
+body[data-game="fortnite"] .game-banner { display: block; }
+body[data-game="fortnite"] .slide { background-image: linear-gradient(180deg,#08122245,#08122280),url("assets/fortnite-island-landscape-no-banner.jpg"); background-size: 100% 100%,auto 100%; background-position: center top; background-repeat: no-repeat; }
+body[data-game="fortnite"] .slide[data-slide="2"],
+body[data-game="fortnite"] .slide[data-slide="5"] { background-image: linear-gradient(180deg,#08122245,#08122280),url("assets/fortnite-launch-key-art-2017.png"); }
+body[data-game="fortnite"] .slide[data-slide="3"] { background-image: none; }
+body[data-game="fortnite"] .slide[data-slide="3"]::before { content: ""; position: absolute; inset: 0; transform: scaleX(-1); background: linear-gradient(180deg,#08122245,#08122280),url("assets/fortnite-island-landscape-no-banner.jpg") center top / auto 100% no-repeat; pointer-events: none; }
+body[data-game="fortnite"] .slide[data-slide="1"] .game-banner { width: 11rem; top: 1.5rem; right: 1rem; }
+body[data-game="fortnite"] .slide[data-slide="1"] #pages > div > h1 { min-height: 15rem; padding-top: 11rem; }
+body[data-page="welcome"] .slide { padding: 1.25rem; background: linear-gradient(125deg,#20394b,#142337 75%); }
+body[data-page="welcome"] .chapter { display: none; }
+body[data-page="welcome"] #pages > div > h1 { min-height: initial; padding: 1.5rem 0 .875rem; font-size: 2.25rem; text-shadow: none; }
+.brand-banner { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .75rem; padding: .5rem 0 1rem; border-bottom: 1px solid #8be5dc55; }
+.brand-name { font-weight: 850; font-size: clamp(2.25rem,10vw,3.5rem); letter-spacing: -.045em; line-height: 1.1; color: #8be5dc; }
+.brand-category { font-size: 1.25rem; letter-spacing: .1em; }
+.toolkit-mission { color: #e0e9ed; }
+.chooser { display: flex; flex-direction: column; gap: .5rem; margin: 1.25rem 0 .875rem; }
+.chooser select { width: 100%; }
+#start { width: 100%; }
+.controls { position: sticky; bottom: 0; z-index: 5; display: flex; gap: .75rem; padding: .75rem 0 max(.75rem,env(safe-area-inset-bottom)); margin-top: .25rem; background: #101725f2; }
+.controls button { flex: 1; }
+footer { color: #bcc8dc; font-size: .8125rem; padding-bottom: max(1rem,env(safe-area-inset-bottom)); }
+.art-credit { display: block; margin-top: .5rem; }
+dialog { width: calc(100% - 2rem); max-width: 30rem; max-height: calc(100dvh - 2rem); overflow-y: auto; padding: 1.25rem; color: #f7f4ea; background: #192438; border: 1px solid #9ba6ba; border-radius: 1rem; }
+dialog::backdrop { background: #080d17bb; }
+@media(min-width: 480px) {
+  .content-panel { padding: 1.5rem; margin: 0 .875rem .875rem; }
+  body[data-page="welcome"] .slide { padding: 1.75rem; }
+  body[data-game="fortnite"] .slide[data-slide="1"] .game-banner { width: 13rem; }
+  body[data-game="fortnite"] .slide[data-slide="1"] #pages > div > h1 { min-height: 17rem; padding-top: 13rem; }
+}
+
+
+nav button:last-child {grid-column:1 / -1}
+
+
+.experience-progression {padding:1rem .75rem}
+.experience-steps {list-style:none;margin:0;padding:0}
+.experience-step {display:grid;grid-template-columns:minmax(0,6.25rem) minmax(0,1fr);gap:.75rem;align-items:stretch;margin:0}
+.experience-step + .experience-step {margin-top:0}
+.experience-title {display:flex;flex-direction:column;align-items:center;text-align:center;color:#8be5dc;font-weight:700;line-height:1.35;padding-top:.25rem}
+.experience-title > span:first-child {display:block;overflow-wrap:normal}
+.experience-arrow {display:flex;flex:1;align-items:center;justify-content:center;min-height:2.75rem;font-size:1.65rem;font-weight:400;color:#a6bac9}
+.experience-step p {padding:0 0 1.25rem;margin:0;font-size:1rem;line-height:1.6}
+.experience-step:last-child p {padding-bottom:0}
+@media(min-width:480px) {
+  .experience-progression {padding:1.5rem 1rem}
+  .experience-step {grid-template-columns:minmax(0,7.25rem) minmax(0,1fr);gap:1rem}
+}
+
+.resource-links {list-style:none;padding:0;margin:.5rem 0 1.5rem}
+.resource-links a {display:block;padding:.75rem;border:1px solid #91c6cb55;border-radius:.65rem;background:#14253b88;line-height:1.5}
+</style>
+<body data-game="" data-page="welcome">
+<header><strong>EñDgame Esports</strong><button id="parents">For Parents</button></header>
+<main><nav aria-label="Review slides"></nav>
+<section class="slide"><img class="game-banner" src="assets/fortnite-logo-dog-tags-transparent.png" alt="Fortnite Battle Royale with hanging dog tags"><span class="chapter" id="position" aria-live="polite"></span>
+<div id="pages">
+<div><div class="brand-banner" aria-label="EñDgame eSports"><span class="brand-name">EñDgame</span><span class="brand-category">eSports</span></div><h1>Family VoD Review</h1><div class="toolkit-mission"><p>Reflective conversations with our children can help maintain the connection between the family values and their digital participation.</p><p>The pathway is designed to help parents engage reflectively with their child as core skills are developed.</p></div><div class="chooser"><label for="game">Choose a game</label><select id="game"><option value="fortnite">Fortnite</option></select></div><button class="primary" id="start">Start review</button></div>
+<div hidden><h1>The Game</h1><div class="content-panel"><div class="legacy">Original Fortnite overview. For current information, see <a href="https://www.fortnite.com/news" target="_blank" rel="noopener">Fortnite News</a>.</div><h2>Fortnite</h2><p><strong>A sandbox survival game:</strong></p><p><strong>Save the World</strong> — Story-based PvE mode played with up to 4 players.</p><p><strong>Creative</strong> — User-submitted custom maps and game modes accessed through public codes.</p><p><strong>Battle Royal</strong> — An online multiplayer terrain-based shooter with two modes, Building and Zero Build.</p><h2>Game Rating — 13+ Violence</h2><p>A cartoon style, with minimal violence, no blood or gore.</p><p>Competing for victory using melee weapons and firearms to complete quests and eliminate opponents.</p><p>While there isn't any profanity in the game dialogue, the game's online nature could expose younger players to iffy language from random strangers.</p><h2>Game</h2><p>Combining a competitive shooter with an animated theme.</p><p>Played in Duos, Trios, and Teams. Fast Paced</p><p>Game length—15–20 min</p></div></div>
+<div hidden><h1>The Child</h1><div class="content-panel"><h2>Game Experience</h2><p>Competing in solo, duo, trio and squads provides unique experiences for problem-solving and team building strategies.</p><p>Fortnite can be played with random players or a cultivated list of friends and family.</p><p>The game experience can vary depending on skill and game mode. In Battle Royal mode games will vary from 10–20 min on average.</p><h2>Community Experience</h2><p>Across all game modes, there are many different activities to complete.</p><p>Fortnite is very similar to other gaming experiences. The cooperative experience helps children and youth focus on and develop team-building and problem-solving skills to overcome the different challenges presented.</p><p>Other attributes players can focus on are resilience and gratitude. Concentrating on learning and growing in trying to develop their skills. Gratitude would be another perspective to focus on.</p></div></div>
+<div hidden><h1>The Parent</h1><div class="content-panel"><h2>Parent Engagement</h2><p>As parents we need to evolve our understanding of technology and how it impacts our children.</p><p>Reflective conversations with our children can help maintain the connection between the family values and their digital participation.</p><p>The pathway is designed to help parents engage reflectively with their child as core skills are developed.</p><p>Like a ladder we start at the bottom and use each rung as an opportunity to ask questions that engages our children in their unique experiences and games.</p><h2>Family Impact</h2><p>Games today are much different.</p><p>Games today do not have a pause option. However, they are much shorter, providing for breaks.</p><ul><li>The popular games are more adventurous and multifaceted.</li><li>Many games now support multi-generational participation.</li><li>Many games have educational benefits that can directly impact both digital and in-person decisions.</li></ul></div></div>
+<div hidden><h1>Your Experience</h1><div class="content-panel experience-progression"><ol class="experience-steps" aria-label="Questions through the sports experience progression"><li class="experience-step"><div class="experience-title"><span>Spectator</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>What’s happening here?</p></li><li class="experience-step"><div class="experience-title"><span>Novice</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>What are you watching for here?</p></li><li class="experience-step"><div class="experience-title"><span>Beginner</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>What made you decide to do that?</p></li><li class="experience-step"><div class="experience-title"><span>Casual</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>What do you like about playing that way?</p></li><li class="experience-step"><div class="experience-title"><span>Competitive</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>What made that seem like your best option?</p></li><li class="experience-step"><div class="experience-title"><span>Elite</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>How did you work out whether to stick with your plan or try something else?</p></li><li class="experience-step"><div class="experience-title"><span>Super Star</span><span class="experience-arrow" aria-hidden="true">↓</span></div><p>If I were playing, how would I know when to try that?</p></li><li class="experience-step"><div class="experience-title"><span>High Profile</span></div><p>If you played that round again, what would you do the same, and what might you try differently?</p></li></ol></div></div>
+<div hidden><h1>The Pathway</h1><div class="content-panel"><div class="path"><article><h2>Gratitude</h2><p>Is noticing and appreciating both the good and challenging things that happen in life. Gratitude leads to positive and joyful outcomes.</p></article><article><h2>Resilience</h2><p>The parent-child relationship can be critical in helping overcome difficult experiences. In gaming the term ‘GG Next’ mean to move on to the next game.</p></article><article><h2>Problem Solving</h2><p>Facing tricky situations or puzzles we can ask our parents or team mates for assistance in learning how to overcome.</p></article><article><h2>Team-Building</h2><p>Teaches cooperation and communication through various activities and challenges helps build trust and self-confidence. The parent child relationship is a perfect place to start.</p></article></div></div></div>
+<div hidden><h1>Resources</h1><div class="content-panel"><h2>For Parents</h2><ul class="resource-links"><li><a href="https://www.fortnite.com/parental-controls" target="_blank" rel="noopener">Fortnite parental controls</a></li></ul><h2>Game Updates &amp; News</h2><ul class="resource-links"><li><a href="https://www.fortnite.com/news" target="_blank" rel="noopener">Fortnite news and game updates</a></li><li><a href="https://www.fortnite.com/news/tag/battle-royale" target="_blank" rel="noopener">Battle Royale updates and release details</a></li><li><a href="https://www.fortnite.com/news/tag/fortnite-og" target="_blank" rel="noopener">Fortnite OG news</a></li></ul><h2>Replay Help</h2><ul class="resource-links"><li><a href="https://www.epicgames.com/help/c-34254770/c-33726977/a14541256?lang=en-US" target="_blank" rel="noopener">How to open a saved Fortnite replay</a></li></ul></div></div>
+</div></section><div class="controls"><button id="back">Back</button><button id="next" class="primary">Next</button></div></main>
+<footer>Family VoD Review · EñDgame Esports<span class="art-credit">Fortnite imagery © Epic Games · <a href="https://www.fortnite.com/news/announcing-fortnite-battle-royale" target="_blank" rel="noopener">Original Battle Royale launch artwork, 2017</a></span></footer>
+<dialog id="parent-panel"><form method="dialog"><button>Close</button></form><h2>For Parents · Fortnite</h2><ul><li><a href="https://www.fortnite.com/news" target="_blank" rel="noopener">Latest official Fortnite updates</a></li><li><a href="https://www.epicgames.com/help/c-34254770/c-33726977/a14541256?lang=en-US" target="_blank" rel="noopener">Epic Games replay instructions</a></li></ul><button id="resources">Open Resources slide</button></dialog>
+<script>
+const pages = [...document.querySelector('#pages').children];
+const chapterNames = ['Start', 'The Game', 'The Child', 'The Parent', 'Your Experience', 'The Pathway', 'Resources'];
+const nav = document.querySelector('nav');
+const back = document.querySelector('#back');
+const next = document.querySelector('#next');
+const panel = document.querySelector('#parent-panel');
+const position = document.querySelector('#position');
+let current = 0;
+const tabs = chapterNames.map((name, index) => {
+  const button = document.createElement('button');
+  button.textContent = name;
+  button.onclick = () => show(index);
+  nav.append(button);
+  return button;
+});
+function show(index, focus = true) {
+  current = index;
+  document.body.dataset.page = index === 0 ? "welcome" : "review";
+  document.body.dataset.game = index === 0 ? "" : document.querySelector("#game").value;
+  document.querySelector("#parents").hidden = index === 0;
+  document.querySelector(".art-credit").hidden = index === 0;
+  document.querySelector(".slide").dataset.slide = String(index);
+  pages.forEach((page, pageIndex) => {
+    page.hidden = index !== pageIndex;
+    if (index === pageIndex) tabs[pageIndex].setAttribute('aria-current', 'step');
+    else tabs[pageIndex].removeAttribute('aria-current');
+  });
+  position.textContent = `Slide ${index + 1} of ${pages.length}`;
+  back.disabled = index === 0;
+  next.hidden = index === pages.length - 1;
+  if (focus) {
+    const heading = pages[index].querySelector('h1');
+    heading.tabIndex = -1;
+    heading.focus();
+    window.scrollTo(0, 0);
+  }
+}
+document.querySelector('#start').onclick = () => show(1);
+back.onclick = () => show(current - 1);
+next.onclick = () => show(current + 1);
+document.querySelector('#parents').onclick = () => panel.showModal();
+document.querySelector('#resources').onclick = () => { panel.close(); show(chapterNames.indexOf("Resources")); };
+document.querySelector("#game").onchange = event => { if (current > 0) document.body.dataset.game = event.target.value; };
+show(0, false);
+</script></body></html>
